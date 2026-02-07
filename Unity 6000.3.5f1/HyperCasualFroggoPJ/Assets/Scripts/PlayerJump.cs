@@ -9,10 +9,12 @@ public class PlayerJump : MonoBehaviour
 
     private Rigidbody2D rb;
     private bool jumpQueued;
+    Animator anim;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -26,6 +28,9 @@ public class PlayerJump : MonoBehaviour
         bool grounded = Physics2D.OverlapCircle(
             groundCheck.position, groundRadius, groundLayer
         );
+
+        anim.SetBool("Grounded", grounded);
+        anim.SetFloat("YSpeed", rb.linearVelocity.y);
 
         if (jumpQueued && grounded)
         {
