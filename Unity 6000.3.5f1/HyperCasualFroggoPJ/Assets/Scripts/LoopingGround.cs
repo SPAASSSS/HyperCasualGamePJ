@@ -3,17 +3,16 @@ using UnityEngine;
 public class LoopingGround : MonoBehaviour
 {
     public float speed = 6f;
-    public Transform otherTile;      
-    public Camera cam;               
+    public SpriteRenderer otherRenderer;
+    public float overlap = 0.02f;
 
     SpriteRenderer sr;
-    float width;
+    private Camera cam;
 
-    void Start()
+    void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
-        width = sr.bounds.size.x;
-        if (!cam) cam = Camera.main;
+        cam = Camera.main;
     }
 
     void Update()
@@ -24,11 +23,8 @@ public class LoopingGround : MonoBehaviour
 
         if (sr.bounds.max.x < camLeft)
         {
-            transform.position = new Vector3(
-                otherTile.position.x + width,
-                transform.position.y,
-                transform.position.z
-            );
+            float newX = otherRenderer.bounds.max.x + sr.bounds.extents.x - overlap;
+            transform.position = new Vector3(newX, transform.position.y, transform.position.z);
         }
     }
 }

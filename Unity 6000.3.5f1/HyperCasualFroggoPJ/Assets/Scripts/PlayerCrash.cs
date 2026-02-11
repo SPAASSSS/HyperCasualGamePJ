@@ -6,7 +6,7 @@ public class PlayerCrash : MonoBehaviour
     {
         if (other.CompareTag("Obstacle"))
         {
-            Time.timeScale = 0f;
+            GameManager.I.GameOver();
             Debug.Log("Game Over");
         }
     }
